@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import type { NextPage, Link } from "next";
 import { useWallet } from "@meshsdk/react";
 import { CardanoWallet } from "@meshsdk/react";
+import Dashboard from "./dashboard";
+
 
 const Home: NextPage = () => {
   const { connected, wallet } = useWallet();
@@ -12,6 +14,7 @@ const Home: NextPage = () => {
     if (wallet) {
       setLoading(true);
       const _assets = await wallet.getAssets();
+      
       setAssets(_assets);
       setLoading(false);
     }
@@ -29,7 +32,12 @@ const Home: NextPage = () => {
       <div>
         <h1>Connect Wallet</h1>
         <CardanoWallet />
-        {connected && (
+        {connected ? (<Dashboard></Dashboard>) : (<><h1>You are not connected</h1></>)}
+        
+
+
+
+        {/* {connected && (
           <>
             <h1>Get Wallet Assets</h1>
             {assets ? (
@@ -38,7 +46,8 @@ const Home: NextPage = () => {
                   {JSON.stringify(assets, null, 2)}
                 </code>
               </pre>
-            ) : (
+            ) : 
+            (
               <button
                 type="button"
                 onClick={() => getAssets()}
@@ -50,9 +59,11 @@ const Home: NextPage = () => {
               >
                 Get Wallet Assets
               </button>
-            )}
+            )
+            
+            }
           </>
-        )}
+        )} */}
       </div>
     </div>
   );
