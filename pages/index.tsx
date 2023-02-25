@@ -23,9 +23,8 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     //update url
-    if (connected) {
+    if (connected)
       router.push('/dashboard');
-    }
   }, [connected, router])
 
   return (

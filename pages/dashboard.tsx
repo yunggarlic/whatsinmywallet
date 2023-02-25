@@ -3,9 +3,6 @@ import { useWallet } from "@meshsdk/react";
 import { Summary, Disconnect } from "./components";
 import { useRouter } from "next/router";
 import styles from "../styles/Dashboard.module.css";
-import { Rubik } from "@next/font/google";
-
-const rubik = Rubik({ subsets: ["latin"] });
 
 const Dashboard = () => {
   const { connected, wallet, disconnect } = useWallet();
@@ -32,7 +29,7 @@ const Dashboard = () => {
   return (
     <>
       {connected ? (
-        <div className={`${styles.dashboardContainer} ${rubik.className}`}>
+        <div className={styles.dashboardContainer}>
           <div className={styles.dashboard}>
             <Disconnect styles={styles.disconnect} disconnect={disconnect}/>
             {wallet ? <Summary styles={summaryStyles} /> : <></>}
