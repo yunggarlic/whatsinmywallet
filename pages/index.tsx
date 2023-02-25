@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import type { NextPage, Link } from "next";
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import { useWallet } from "@meshsdk/react";
 import { CardanoWallet } from "@meshsdk/react";
-import Dashboard from "./dashboard";
-
 
 const Home: NextPage = () => {
-  const { connected, wallet } = useWallet();
+  const router = useRouter();
+
+
+  const { connected, wallet, disconnect } = useWallet();
   const [assets, setAssets] = useState<null | any>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -14,7 +16,6 @@ const Home: NextPage = () => {
     if (wallet) {
       setLoading(true);
       const _assets = await wallet.getAssets();
-      
       setAssets(_assets);
       setLoading(false);
     }
@@ -23,21 +24,16 @@ const Home: NextPage = () => {
   useEffect(() => {
     //update url
     if (connected) {
-      window.history.pushState({}, "", "/dashboard");
+      router.push('/dashboard');
     }
-  }, [connected])
+  }, [connected, router])
 
   return (
     <div className="connect-wallet">
       <div>
         <h1>Connect Wallet</h1>
         <CardanoWallet />
-        {connected ? (<Dashboard></Dashboard>) : (<><h1>You are not connected</h1></>)}
-        
-
-
-
-        {/* {connected && (
+        {connected && (
           <>
             <h1>Get Wallet Assets</h1>
             {assets ? (
@@ -46,8 +42,7 @@ const Home: NextPage = () => {
                   {JSON.stringify(assets, null, 2)}
                 </code>
               </pre>
-            ) : 
-            (
+            ) : (
               <button
                 type="button"
                 onClick={() => getAssets()}
@@ -59,11 +54,9 @@ const Home: NextPage = () => {
               >
                 Get Wallet Assets
               </button>
-            )
-            
-            }
+            )}
           </>
-        )} */}
+        )}
       </div>
     </div>
   );
