@@ -14,12 +14,14 @@ const Dashboard = () => {
     right: styles.right,
     send: styles.send,
     receive: styles.receive,
+    toggleLovelace: styles["toggle-lovelace"],
+    sendModal: styles["send-modal"]
   }
 
   useEffect(() => {
+    console.log(styles)
     if (connected) {
       console.log("wallet connected");
-      console.log(typeof wallet)
     } else {
       console.log("wallet not connected, rerouting to home");
       router.push("/");
